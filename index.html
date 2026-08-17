@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liturgy of the Believers Quiz — St. Stephen Deacons School</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sanctuary:#0A1538; --sanctuary-deep:#060D24; --sanctuary-lift:#122052;
+  --brass:#C9963F; --brass-lit:#F0C879;
+  --linen:#EDE6D6; --linen-dim:#9AA3BE;
+  --ok:#7A9A6E; --ok-lit:#A8C79C; --no:#C1272D; --no-lit:#F08C86;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;background:var(--sanctuary-deep);color:var(--linen);
+  font-family:'Archivo',system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(ellipse 120% 70% at 50% 0%, var(--sanctuary-lift) 0%, var(--sanctuary) 45%, var(--sanctuary-deep) 100%);
+  background-attachment:fixed;
+  display:flex;justify-content:center;padding:clamp(16px,4vw,48px) clamp(14px,4vw,32px);
+}
+button,input{font:inherit;color:inherit}
+button{background:none;border:none;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--brass-lit);outline-offset:3px}
+
+.wrap{width:100%;max-width:620px;display:flex;flex-direction:column;gap:clamp(18px,3vw,28px)}
+
+.crest{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.mark{width:52px;height:30px;position:relative}
+.mark svg{width:100%;height:100%;overflow:visible}
+.eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--brass);font-weight:700}
+h1{font-family:'Marcellus',serif;font-size:clamp(26px,6vw,40px);line-height:1.1;font-weight:400}
+.sub{font-size:clamp(13px,3vw,16px);color:var(--linen-dim);line-height:1.5}
+
+.card{
+  border:1px solid rgba(201,150,63,.24);background:rgba(10,21,56,.55);
+  padding:clamp(18px,4.5vw,32px);display:flex;flex-direction:column;gap:clamp(14px,3vw,22px);
+}
+
+label.fld{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--linen-dim);font-weight:700}
+input[type=text]{
+  width:100%;padding:14px 16px;background:rgba(6,13,36,.6);
+  border:1px solid rgba(201,150,63,.3);border-radius:2px;
+  font-size:clamp(16px,4vw,19px);font-weight:600;color:var(--linen);
+}
+input[type=text]::placeholder{color:rgba(154,163,190,.5);font-weight:400}
+
+.btn{
+  padding:15px 24px;border:1px solid var(--brass);background:var(--brass);
+  color:var(--sanctuary-deep);border-radius:2px;
+  font-size:clamp(13px,3.2vw,16px);font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  transition:background .15s,opacity .15s;width:100%;
+}
+.btn:hover:not(:disabled){background:var(--brass-lit)}
+.btn:disabled{opacity:.32;cursor:not-allowed}
+.btn.ghost{background:none;color:var(--linen-dim);border-color:rgba(154,163,190,.3)}
+.btn.ghost:hover{background:rgba(154,163,190,.14);color:var(--linen)}
+
+.bar{display:flex;gap:4px}
+.bar i{flex:1;height:4px;background:rgba(154,163,190,.2);border-radius:2px;transition:background .25s}
+.bar i.done{background:var(--brass)}
+.bar i.now{background:var(--brass-lit)}
+
+.qnum{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--linen-dim);font-weight:700}
+.qtext{font-size:clamp(19px,4.6vw,26px);line-height:1.32;font-weight:600;text-wrap:balance}
+
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{
+  display:flex;align-items:flex-start;gap:13px;text-align:left;width:100%;
+  padding:14px 16px;border:1px solid rgba(201,150,63,.22);border-radius:2px;
+  background:rgba(201,150,63,.03);
+  font-size:clamp(15px,3.7vw,18px);line-height:1.35;font-weight:500;
+  transition:border-color .15s,background .15s;
+}
+.opt:hover{border-color:rgba(201,150,63,.55);background:rgba(201,150,63,.09)}
+.opt .ltr{
+  flex:none;width:26px;height:26px;display:grid;place-items:center;
+  border:1px solid rgba(201,150,63,.4);border-radius:50%;
+  font-size:12px;font-weight:800;color:var(--brass);
+}
+.opt.sel{border-color:var(--brass);background:rgba(201,150,63,.14)}
+.opt.sel .ltr{background:var(--brass);color:var(--sanctuary-deep);border-color:var(--brass)}
+
+.row{display:flex;gap:10px}
+.row .btn{width:auto;flex:1}
+
+.score{text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center}
+.score .who{font-family:'Marcellus',serif;font-size:clamp(20px,5vw,30px);letter-spacing:.04em}
+.score .big{font-size:clamp(52px,15vw,90px);font-weight:800;line-height:1;font-variant-numeric:tabular-nums;color:var(--brass-lit)}
+.score .of{font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--linen-dim);font-weight:700}
+.score .msg{font-size:clamp(14px,3.4vw,17px);line-height:1.5;color:var(--linen);max-width:34ch;margin-top:8px}
+
+.rev{display:flex;flex-direction:column;gap:10px}
+.ritem{border-left:3px solid var(--c);padding:12px 14px;background:rgba(201,150,63,.04);display:flex;flex-direction:column;gap:5px}
+.ritem .rq{font-size:clamp(13px,3.2vw,15px);font-weight:700;line-height:1.35}
+.ritem .ra{font-size:clamp(12px,3vw,14px);line-height:1.45;color:var(--linen-dim)}
+.ritem .ra b{color:var(--c);font-weight:700}
+.ritem .why{font-size:clamp(11px,2.9vw,13px);line-height:1.5;color:rgba(154,163,190,.85);font-style:italic}
+
+.warn{font-size:13px;line-height:1.5;color:var(--no-lit);
+  border-left:3px solid var(--no);padding:8px 12px;background:rgba(193,39,45,.08)}
+
+.teach{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;
+  color:rgba(154,163,190,.4);padding:6px;align-self:center;transition:color .15s}
+.teach:hover{color:var(--brass)}
+.note{font-size:12px;line-height:1.6;color:rgba(154,163,190,.75);text-align:center}
+
+@media print{
+  body{background:#fff;color:#000;background-image:none;padding:20px}
+  .card{border:1px solid #999;background:#fff}
+  .btn,.noprint{display:none!important}
+  .score .big{color:#000}
+  .ritem{background:#f4f4f4}
+  h1,.eyebrow,.score .who{color:#000}
+  .ra b{color:#000}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+const SHEET_URL   = "https://script.google.com/macros/s/AKfycbwk8v1AQwkpXZaagZaPranztjCG1kuszoDQwUQCOq1f0gvzG-r4jeiNadzT8sEwmV1s/exec";
+const TEACHER_CODE = "stephen";
+const CLASS_LEVEL = "7-8";
+const STORE_KEY="ssquiz_"+"liturgyofthebelieversquiz";
+
+function loadResults(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)||"[]"); }catch(e){ return []; } }
+function saveResult(rec){
+  try{ const all=loadResults(); all.push(rec); localStorage.setItem(STORE_KEY, JSON.stringify(all)); }catch(e){}
+  if(SHEET_URL){
+    try{
+      fetch(SHEET_URL,{method:"POST",mode:"no-cors",
+        headers:{"Content-Type":"text/plain;charset=utf-8"},
+        body:JSON.stringify(rec)});
+    }catch(e){}
+  }
+}
+function normName(n){ return String(n).trim().toLowerCase().replace(/\s+/g," "); }
+function alreadyTaken(n){ return loadResults().some(r=>normName(r.name)===normName(n)); }
+function clearResults(){ try{ localStorage.removeItem(STORE_KEY); }catch(e){} }
+
+function toCSV(rows){
+  const esc=v=>'"'+String(v).replace(/"/g,'""')+'"';
+  const head=["Time","Name","Score","Out of","Percent","Missed questions"];
+  return [head.map(esc).join(",")].concat(
+    rows.map(r=>[r.time,r.name,r.score,r.total,r.percent+"%",r.missed].map(esc).join(","))
+  ).join("\r\n");
+}
+
+function buildDoc(){
+  const rows=loadResults().slice().sort((a,b)=>a.name.localeCompare(b.name));
+  if(!rows.length){ alert("No results saved on this device yet."); return; }
+  const total=QUIZ.length;
+  const avg=(rows.reduce((n,r)=>n+r.score,0)/rows.length);
+  const missCount=QUIZ.map((_,ix)=>
+    rows.filter(r=>String(r.missed).split(" ").includes(String(ix+1))).length);
+  const cell=(v,b)=>'<td style="border:1px solid #999;padding:6px 9px;'+(b?"font-weight:bold;":"")+'">'+v+'</td>';
+  const esc2=v=>String(v).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const body=
+  '<div style="font-family:Georgia,serif;color:#000">'+
+    '<p style="text-align:center;font-size:10pt;letter-spacing:2px;margin:0">'+
+      'ST. STEPHEN DEACONS SCHOOL &middot; ST. GEORGE, NASHVILLE</p>'+
+    '<h1 style="text-align:center;font-size:20pt;margin:6px 0 2px">'+titleClean+' Quiz Results</h1>'+
+    '<p style="text-align:center;font-size:11pt;margin:0 0 4px">'+"Liturgy of the Believers &middot; Level 7/8"+'</p>'+
+    '<p style="text-align:center;font-size:10pt;color:#555;margin:0 0 18px">printed '+new Date().toLocaleDateString()+'</p>'+
+    '<p style="font-size:11pt;margin:0 0 10px"><b>'+rows.length+'</b> student'+(rows.length===1?"":"s")+' &nbsp;&middot;&nbsp; class average <b>'+avg.toFixed(1)+' / '+total+'</b> ('+Math.round(avg/total*100)+'%)</p>'+
+    '<table style="border-collapse:collapse;width:100%;font-size:10pt"><thead><tr>'+
+      cell("#")+cell("Name")+cell("Score")+cell("%")+cell("Missed")+'</tr></thead><tbody>'+
+      rows.map((r,i)=>'<tr>'+cell(i+1)+cell(esc2(r.name))+cell(r.score+'/'+r.total)+cell(r.percent+'%')+cell(esc2(r.missed))+'</tr>').join("")+
+    '</tbody></table>'+
+    '<h3 style="font-size:12pt;margin:18px 0 6px">Questions most often missed</h3>'+
+    '<ol style="font-size:10pt;line-height:1.6;margin:0 0 0 20px">'+
+      missCount.map((c,ix)=>'<li>'+esc2(QUIZ[ix].q)+' — missed by '+c+' student'+(c===1?"":"s")+'</li>').join("")+
+    '</ol></div>';
+  const w=window.open("","_blank");
+  w.document.write(body); w.document.close();
+}
+
+const QUIZ = [{"q":"Which prayer is prayed at the beginning of every service?","o":["The Lord's Prayer","The Litany of the Departed","The Thanksgiving Prayer","The Absolution"],"a":2,"why":"The Thanksgiving Prayer starts every service: Vespers, Matins, Liturgy, weddings and funerals."},{"q":"Why is the hymn called the Verses of Cymbals?","o":["Because it is only sung on feasts","Because it is chanted with the cymbals","Because it has cymbals written in the words","Because the deacon plays it alone"],"a":1,"why":"It gets its name from the instrument: it is chanted using the cymbals."},{"q":"How many stykhons are in one verse?","o":["Two","Three","Four","Five"],"a":2,"why":"A verse is a paragraph of four stykhons, which are four melodic sentences."},{"q":"How many tunes does the Verses of Cymbals have?","o":["Three","Four","Five","Two"],"a":0,"why":"Three: the standard tune, the festive tune, and the Lenten Kyrie eleison."},{"q":"The Adam parts are said on which days?","o":["Wednesday to Saturday","Sunday to Tuesday","Only on Sundays","Only during feasts"],"a":1,"why":"Adam parts run Sunday through Tuesday. Watos parts run Wednesday through Saturday."},{"q":"Which tune is said on the weekdays of Lent and Jonah's Fast?","o":["The festive tune","The standard tune","The Lenten Kyrie eleison","The Kiahk tune"],"a":2,"why":"On those weekdays we do not play the cymbals because of their asceticism, so we say the Lenten Kyrie eleison instead."},{"q":"In the Verses of Cymbals, which part comes FIRST?","o":["The martyrs","The apostles","The saints","St. Mary and the heavenlies"],"a":3,"why":"The order is St. Mary and the heavenlies, then the apostles, then the martyrs, then the saints, then the conclusion."},{"q":"What does the Thanksgiving Prayer thank God for?","o":["Food and drink","The saints","Everything — good or bad, night and day, sickness and health","The liturgy only"],"a":2,"why":"The Thanksgiving Prayer thanks God for all His works and every condition, whether things seem good or bad to us."},{"q":"Who chants the Verses of Cymbals?","o":["The priest alone","A deacon, with the cymbals","The whole congregation","A child"],"a":1,"why":"A deacon chants the Verses of Cymbals, playing the cymbals, before the Psalm reading."},{"q":"What comes right after the Thanksgiving Prayer in the service?","o":["The Liturgy","The Verses of Cymbals","The sermon","The communion"],"a":1,"why":"After the Thanksgiving Prayer, the deacon chants the Verses of Cymbals. This is the order in every service."}];
+
+const MARK='<div class="mark"><svg viewBox="0 0 100 56" aria-hidden="true">'+
+ '<path d="M10 28 Q50 4 90 28 Q50 52 10 28 Z" fill="none" stroke="var(--brass)" stroke-width="2.5"/>'+
+ '<path d="M30 28 L70 28" stroke="var(--brass)" stroke-width="2.5"/>'+
+ '<ellipse cx="58" cy="28" rx="3" ry="5" fill="var(--brass)"/></svg></div>';
+
+let name="", step=-1, saved=false, picks=new Array(QUIZ.length).fill(null);
+const app=document.getElementById('app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function draw(){
+  if(step===-1) return start();
+  if(step<QUIZ.length) return question();
+  results();
+}
+
+function start(){
+  app.innerHTML=
+    '<div class="crest">'+MARK+
+      '<span class="eyebrow">St. Stephen Deacons School</span>'+
+      '<h1>Liturgy of the Believers Quiz</h1>'+
+      '<p class="sub">Liturgy of the Believers &middot; Level 7/8'+(""?'<br>'+"":'')+'</p>'+
+    '</div>'+
+    '<div class="card">'+
+      '<label class="fld" for="nm">Write your full name</label>'+
+      '<input type="text" id="nm" placeholder="First and last name" autocomplete="off" value="'+esc(name)+'">'+
+      '<p class="warn" id="warn" hidden></p>'+
+      '<button class="btn" id="go" disabled>Start the quiz</button>'+
+      '<p class="note">'+QUIZ.length+' questions. You get <b>one try</b>, so read each question carefully.<br>'+
+      'You can go back and change an answer before you finish.</p>'+
+      '<button class="teach" id="teach">Teacher</button>'+
+    '</div>';
+  const nm=document.getElementById('nm'), go=document.getElementById('go'), warn=document.getElementById('warn');
+  const check=()=>{
+    name=nm.value.trim();
+    const dup = name.length>=2 && alreadyTaken(name);
+    warn.hidden=!dup;
+    if(dup) warn.textContent="A quiz has already been turned in under this name. See your teacher.";
+    go.disabled = name.length<2 || dup;
+  };
+  const begin=()=>{ if(!go.disabled){ step=0; saved=false; draw(); window.scrollTo(0,0); } };
+  nm.addEventListener('input',check);
+  nm.addEventListener('keydown',e=>{ if(e.key==="Enter") begin(); });
+  go.onclick=begin;
+  document.getElementById('teach').onclick=teacher;
+  check(); nm.focus();
+}
+
+function teacher(){
+  const code=prompt("Teacher code:");
+  if(code===null) return;
+  if(code.trim().toLowerCase()!==TEACHER_CODE.toLowerCase()){ alert("That code is not right."); return; }
+  const rows=loadResults().slice().reverse();
+  app.innerHTML=
+    '<div class="crest">'+MARK+'<span class="eyebrow">Saved on this device</span>'+
+      '<h1>Results</h1>'+
+      '<p class="sub">'+rows.length+' '+(rows.length===1?"attempt":"attempts")+' recorded'+(SHEET_URL?" &middot; also sent to your spreadsheet":"")+'</p>'+
+    '</div>'+
+    '<div class="card">'+
+      (rows.length?'<div class="rev">'+rows.map(r=>{
+        const c = r.score>=Math.ceil(QUIZ.length*0.8)?'var(--ok-lit)':r.score>=Math.ceil(QUIZ.length*0.6)?'var(--brass-lit)':'var(--no-lit)';
+        return '<div class="ritem" style="--c:'+c+'">'+
+          '<span class="rq">'+esc(r.name)+' &mdash; '+r.score+'/'+r.total+' ('+r.percent+'%)</span>'+
+          '<span class="ra">'+esc(r.time)+'</span>'+
+          '<span class="why">Missed: '+esc(r.missed)+'</span></div>';}).join("")+'</div>'
+        : '<p class="note">Nothing saved yet on this device.</p>')+
+    '</div>'+
+    '<div class="card noprint">'+
+      '<button class="btn" id="doc">Download as a document</button>'+
+      '<button class="btn ghost" id="csv">Download as a spreadsheet</button>'+
+      '<button class="btn ghost" id="wipe">Clear all results</button>'+
+      '<button class="btn ghost" id="home">Back to the quiz</button>'+
+      '<p class="note">Scores save on this device only. If students use their own phones, each phone keeps its own list &mdash; the spreadsheet receives every attempt.</p>'+
+    '</div>';
+  document.getElementById('doc').onclick=buildDoc;
+  document.getElementById('csv').onclick=()=>{ const blob=new Blob([toCSV(loadResults())],{type:"text/csv"}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download="quiz-results.csv"; a.click(); };
+  document.getElementById('wipe').onclick=()=>{ if(confirm("Delete every saved result on this device? This cannot be undone.")) { clearResults(); teacher(); } };
+  document.getElementById('home').onclick=()=>{ step=-1; draw(); };
+}
+
+function question(){
+  const item=QUIZ[step], L=["A","B","C","D"];
+  app.innerHTML=
+    '<div class="crest">'+MARK+'<span class="eyebrow">'+esc(name)+'</span></div>'+
+    '<div class="card">'+
+      '<div class="bar">'+QUIZ.map((_,n)=>'<i class="'+(n<step?'done':n===step?'now':'')+'"></i>').join("")+'</div>'+
+      '<span class="qnum">Question '+(step+1)+' of '+QUIZ.length+'</span>'+
+      '<p class="qtext">'+esc(item.q)+'</p>'+
+      '<div class="opts">'+item.o.map((t,n)=>
+        '<button class="opt '+(picks[step]===n?'sel':'')+'" data-pick="'+n+'">'+
+           '<span class="ltr">'+L[n]+'</span><span>'+esc(t)+'</span></button>').join("")+'</div>'+
+      '<div class="row">'+
+        (step>0?'<button class="btn ghost" id="back">Back</button>':'')+
+        '<button class="btn" id="fwd" '+(picks[step]===null?'disabled':'')+'>'+
+          (step===QUIZ.length-1?'Finish &amp; see my score':'Next')+'</button>'+
+      '</div>'+
+    '</div>';
+  app.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{ picks[step]=+b.dataset.pick; step++; draw(); });
+  const back=document.getElementById('back'); if(back) back.onclick=()=>{ step--; draw(); };
+  document.getElementById('fwd').onclick=()=>{ step++; draw(); };
+}
+
+function results(){
+  const right=picks.reduce((n,p,ix)=>n+(p===QUIZ[ix].a?1:0),0);
+  if(!saved){
+    saved=true;
+    const missed=QUIZ.map((it,ix)=>picks[ix]===it.a?null:ix+1).filter(Boolean).join(" ");
+    saveResult({time:new Date().toLocaleString(),name:name,score:right,
+                total:QUIZ.length,percent:Math.round(right/QUIZ.length*100),
+                missed:missed||"none",class:CLASS_LEVEL});
+  }
+  const msg = right===10 ? "Perfect. Every single one."
+            : right>=Math.ceil(10*0.8) ? "Strong work. Read over the ones you missed and you have this."
+            : right>=Math.ceil(10*0.6) ? "A good start. Go back through the lesson on the ones below."
+            : "Read this lesson again and take it a second time. You will do better.";
+  app.innerHTML=
+    '<div class="crest">'+MARK+'<span class="eyebrow">St. Stephen Deacons School</span></div>'+
+    '<div class="card">'+
+      '<div class="score">'+
+        '<span class="who">'+esc(name)+'</span>'+
+        '<span class="big">'+right+'</span>'+
+        '<span class="of">out of '+QUIZ.length+'</span>'+
+        '<p class="msg">'+msg+'</p>'+
+      '</div>'+
+    '</div>'+
+    '<div class="card">'+
+      '<span class="qnum">Every question, reviewed</span>'+
+      '<div class="rev">'+QUIZ.map((it,ix)=>{
+        const ok=picks[ix]===it.a, c=ok?'var(--ok-lit)':'var(--no-lit)';
+        return '<div class="ritem" style="--c:'+c+'">'+
+          '<span class="rq">'+(ix+1)+'. '+esc(it.q)+'</span>'+
+          '<span class="ra">'+(ok
+            ? '<b>Correct</b> &mdash; '+esc(it.o[it.a])
+            : '<b>You said</b> '+esc(it.o[picks[ix]])+' &middot; <b>Answer</b> '+esc(it.o[it.a]))+'</span>'+
+          '<span class="why">'+esc(it.why)+'</span></div>';}).join("")+'</div>'+
+    '</div>'+
+    '<div class="card noprint">'+
+      '<button class="btn" id="prt">Print or save this page</button>'+
+      '<p class="note">This was your one try, and it has been turned in.<br>Show this screen to your teacher.</p>'+
+    '</div>';
+  document.getElementById('prt').onclick=()=>window.print();
+}
+
+draw();
+</script>
+</body>
+</html>
