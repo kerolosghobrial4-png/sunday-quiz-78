@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="build-id" content="mu3veie6">
+<meta name="build-id" content="muvx62e5">
 <title>Liturgy of the Believers Quiz — St. Stephen Deacons School</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -111,6 +111,7 @@ input[type=text]::placeholder{color:rgba(154,163,190,.5);font-weight:400}
   color:rgba(154,163,190,.4);padding:6px;align-self:center;transition:color .15s}
 .teach:hover{color:var(--brass)}
 .note{font-size:12px;line-height:1.6;color:rgba(154,163,190,.75);text-align:center}
+.stamp{font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.45;margin-top:2px}
 
 @media print{
   body{background:#fff;color:#000;background-image:none;padding:20px}
@@ -130,7 +131,23 @@ input[type=text]::placeholder{color:rgba(154,163,190,.5);font-weight:400}
 const SHEET_URL   = "https://script.google.com/macros/s/AKfycbwk8v1AQwkpXZaagZaPranztjCG1kuszoDQwUQCOq1f0gvzG-r4jeiNadzT8sEwmV1s/exec";
 const TEACHER_CODE = "stephen";
 const CLASS_LEVEL = "7-8";
-const STORE_KEY="ssquiz_"+"liturgyofthebelieversquiz"+"_"+"mu3veie6";
+// The build this copy of the page was generated from.
+const BUILD_ID = "muvx62e5";
+// The build actually being shown. Usually the same, but if GitHub's CDN handed
+// out a stale copy of this page, ACTIVE_BUILD is the newer one we pulled in.
+let ACTIVE_BUILD = BUILD_ID;
+
+// A build id is Date.now() in base 36, so it decodes back to the publish time.
+function whenOf(id){
+  try {
+    const d = new Date(parseInt(id, 36));
+    if (isNaN(d.getTime())) return "";
+    return d.toLocaleDateString(undefined, { month:'short', day:'numeric' }) +
+           ", " + d.toLocaleTimeString(undefined, { hour:'numeric', minute:'2-digit' });
+  } catch(e) { return ""; }
+}
+const STORE_BASE="ssquiz_"+"liturgyofthebelieversquiz";
+let STORE_KEY=STORE_BASE+"_"+ACTIVE_BUILD;
 
 function loadResults(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)||"[]"); }catch(e){ return []; } }
 function saveResult(rec){
@@ -168,7 +185,7 @@ function buildDoc(){
   '<div style="font-family:Georgia,serif;color:#000">'+
     '<p style="text-align:center;font-size:10pt;letter-spacing:2px;margin:0">'+
       'ST. STEPHEN DEACONS SCHOOL &middot; ST. GEORGE, NASHVILLE</p>'+
-    '<h1 style="text-align:center;font-size:20pt;margin:6px 0 2px">'+titleClean+' Quiz Results</h1>'+
+    '<h1 style="text-align:center;font-size:20pt;margin:6px 0 2px">'+"Liturgy of the Believers"+' Quiz Results</h1>'+
     '<p style="text-align:center;font-size:11pt;margin:0 0 4px">'+"Liturgy of the Believers &middot; Level 7/8"+'</p>'+
     '<p style="text-align:center;font-size:10pt;color:#555;margin:0 0 18px">printed '+new Date().toLocaleDateString()+'</p>'+
     '<p style="font-size:11pt;margin:0 0 10px"><b>'+rows.length+'</b> student'+(rows.length===1?"":"s")+' &nbsp;&middot;&nbsp; class average <b>'+avg.toFixed(1)+' / '+total+'</b> ('+Math.round(avg/total*100)+'%)</p>'+
@@ -184,14 +201,18 @@ function buildDoc(){
   w.document.write(body); w.document.close();
 }
 
-const QUIZ = [{"q":"When does the priest wash his hands three times during this part of the Liturgy?","o":["During the Gospel","While the Creed is being read","After Communion","Before the sermon"],"a":1,"why":"While the Creed is being read, the priest washes his hands three times, just as he did before choosing the Lamb."},{"q":"Which direction is the priest facing when he shakes his hands before the people?","o":["East","North","West","South"],"a":2,"why":"He stands by the Sanctuary's door, facing West, and shakes his hands before the people."},{"q":"What is the priest signifying when he shakes his hands before the people?","o":["That the Liturgy is finished","That he is calling the deacons forward","That he is innocent of the blood of anyone who partakes undeservedly","That he is asking for more incense"],"a":2,"why":"By shaking his hands he signifies, \"I am innocent of the blood of whoever undeservedly partakes of the Holy Sacraments, without letting me know.\""},{"q":"Which Church Father preached the same message as the Prayer of Reconciliation?","o":["St. Athanasius","St. John Chrysostom","St. Antony","St. Mark"],"a":1,"why":"The message of the Prayer of Reconciliation is the same one St. John Chrysostom and other Church Fathers preached from the pulpit."},{"q":"Why is the Reconciliation Prayer not prayed on Covenant Thursday?","o":["Because the church is closed that day","Because there is no Liturgy on that day","Because true reconciliation is not accomplished until the crucifixion on Friday","Because the deacons do not serve that day"],"a":2,"why":"It is skipped as an indication that true reconciliation will not be accomplished until the crucifixion of Christ on Friday."},{"q":"How do the people greet one another at the end of the Reconciliation Prayer?","o":["They shake hands with anyone nearby","Men greet men and women greet women with a holy kiss","They bow to the altar","They stay silent and do not greet"],"a":1,"why":"The deacon calls out \"greet one another with a holy kiss\" — men exchange kisses with men, and women with women."},{"q":"What does the triangular veil on top of the Prospharine symbolize?","o":["The Holy Trinity","The star of Bethlehem","The seal on the Savior's tomb","The crown of thorns"],"a":2,"why":"The triangular veil symbolizes the seal on the Savior's tomb."},{"q":"What does the deacon's call \"Prospharine, Prospharine!\" mean?","o":["\"Lord have mercy!\"","\"Let us pray!\"","\"Come forth!\"","\"Stand up!\""],"a":2,"why":"\"Prospharine, Prospharine!\" means \"Come forth!\" and is said at the end of the Reconciliation Prayer."},{"q":"What does the vibration or jingle of bells represent when the Prospharine is raised?","o":["The angels singing in heaven","The quake when the angel rolled the stone away from the tomb","The bells of the church tower","The call to Communion"],"a":1,"why":"The jingling symbolizes the quake that happened when the angel rolled the stone away from the tomb's entrance."},{"q":"Besides the rolling away of the stone, what else does raising the Prospharine signify?","o":["The birth of Christ","The descent of the Holy Spirit","The return of the Savior's soul to His Body at His rising from the dead","The Ascension into heaven"],"a":2,"why":"Raising the Prospharine signifies the rolling away of the stone and also the return of the Savior's soul to His Body at His rising from the dead."}];
+// The questions this page was built with. GitHub's CDN can serve a stale copy
+// of index.html for up to 10 minutes after publishing, so treat these as a
+// fallback, not as the truth. boot() below replaces them when it can.
+const QUIZ_EMBEDDED = [{"q":"At the start of the Anaphora, which hand does the priest put the veil that was on the paten on?","o":["His left hand","His right hand","He lays it on the altar","He hands it to the deacon"],"a":1,"why":"The veil from the Eprocverin goes on his left hand, and the one from the paten goes on his right hand."},{"q":"What does the priest say as he signs the congregation with the cross?","o":["\"Lift up your hearts\"","\"Peace be with all\"","\"The Lord be with you all\"","\"Let us give thanks to the Lord\""],"a":2,"why":"He holds the cross and signs the congregation while saying, \"The Lord be with you all.\""},{"q":"What does the priest say as he signs the servants on his right?","o":["\"The Lord be with you all\"","\"Lift up your hearts\"","\"Let us attend\"","\"Holy, Holy, Holy\""],"a":1,"why":"He signs the servants on his right saying, \"Lift up your hearts.\""},{"q":"According to this lesson, what does the word \"Anaphora\" mean?","o":["Holy offering","Remembrance","Lifting up","Thanksgiving"],"a":2,"why":"This part is called the Anaphora because of \"Lift up your hearts\" — the word means \"lifting up.\""},{"q":"How does the congregation respond to \"Lift up your hearts\"?","o":["\"It is meet and right\"","\"And with your spirit\"","\"We have them with the Lord\"","\"Lord have mercy\""],"a":2,"why":"The congregation responds, \"We have them with the Lord.\""},{"q":"If we say \"We have them with the Lord\" while our hearts and minds are not actually focused on prayer, what does the lesson say we are doing?","o":["Nothing wrong, as long as we say it out loud","Showing respect to the priest","Lying to the priest and being dishonest to God","Praying silently instead"],"a":2,"why":"If we say it without truly lifting up our hearts, we are lying to the priest and at the same time being dishonest to God."},{"q":"The priest says \"Let us give thanks to the Lord.\" How do the people respond?","o":["\"We have them with the Lord\"","\"It is meet and right\"","\"Amen, Alleluia\"","\"Glory be to You, O Lord\""],"a":1,"why":"The people respond \"It is meet and right,\" confirming the thanksgiving the priest offers to God."},{"q":"When the priest raises his covered hands, what is he imitating?","o":["Moses raising his arms in battle","The angels at the tomb","The Seraphim, who cover their eyes and feet with their wings before God","The apostles at the Last Supper"],"a":2,"why":"The covered hands signify the Seraphim, who stand before God with their eyes and feet covered by their wings because of His glory (Isaiah 6:2)."},{"q":"In the second and third passages, the priest mentions the ranks of heavenly beings who praise God. How many ranks are named?","o":["Three","Seven","Nine","Twelve"],"a":2,"why":"The angels, archangels, principalities, authorities, thrones, dominions, heavenly powers, cherubim, and seraphim — nine ranks in total."},{"q":"The people sing \"Holy, Holy, Holy, Lord of Hosts.\" Who did the prophet Isaiah hear singing this hymn without ceasing?","o":["The archangels","The cherubim","The seraphim","The prophets of Israel"],"a":2,"why":"This is the hymn Isaiah the prophet heard the Seraphim sing without ceasing (Isaiah 6:3)."}];
+let QUIZ = QUIZ_EMBEDDED;
 
 const MARK='<div class="mark"><svg viewBox="0 0 100 56" aria-hidden="true">'+
  '<path d="M10 28 Q50 4 90 28 Q50 52 10 28 Z" fill="none" stroke="var(--brass)" stroke-width="2.5"/>'+
  '<path d="M30 28 L70 28" stroke="var(--brass)" stroke-width="2.5"/>'+
  '<ellipse cx="58" cy="28" rx="3" ry="5" fill="var(--brass)"/></svg></div>';
 
-let name="", step=-1, saved=false, picks=new Array(QUIZ.length).fill(null);
+let name="", step=-1, saved=false, picks=[];
 const app=document.getElementById('app');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -216,6 +237,7 @@ function start(){
       '<p class="note">'+QUIZ.length+' questions. You get <b>one try</b>, so read each question carefully.<br>'+
       'You can go back and change an answer before you finish.</p>'+
       '<button class="teach" id="teach">Teacher</button>'+
+      '<p class="note stamp">Quiz version '+ACTIVE_BUILD+(whenOf(ACTIVE_BUILD)?' &middot; posted '+whenOf(ACTIVE_BUILD):'')+'</p>'+
     '</div>';
   const nm=document.getElementById('nm'), go=document.getElementById('go'), warn=document.getElementById('warn');
   const check=()=>{
@@ -296,9 +318,10 @@ function results(){
                 total:QUIZ.length,percent:Math.round(right/QUIZ.length*100),
                 missed:missed||"none",class:CLASS_LEVEL});
   }
-  const msg = right===10 ? "Perfect. Every single one."
-            : right>=Math.ceil(10*0.8) ? "Strong work. Read over the ones you missed and you have this."
-            : right>=Math.ceil(10*0.6) ? "A good start. Go back through the lesson on the ones below."
+  const pct = QUIZ.length ? Math.round(right/QUIZ.length*100) : 0;
+  const msg = pct===100 ? "Perfect. Every single one."
+            : pct>=80  ? "Strong work. Read over the ones you missed and you have this."
+            : pct>=60  ? "A good start. Go back through the lesson on the ones below."
             : "Read this lesson again and take it a second time. You will do better.";
   app.innerHTML=
     '<div class="crest">'+MARK+'<span class="eyebrow">St. Stephen Deacons School</span></div>'+
@@ -328,7 +351,50 @@ function results(){
   document.getElementById('prt').onclick=()=>window.print();
 }
 
-draw();
+// GitHub Pages sits behind a CDN that caches this page for 10 minutes AND
+// ignores the query string when deciding what is cached — so "index.html?v=new"
+// is served the same stale bytes as "index.html". That is why a freshly
+// published quiz could still show the old questions.
+//
+// The path, however, IS part of the cache key. So every publish also writes the
+// questions to q-<build>.js, a path the CDN has never served before and so
+// cannot have cached. The link the teacher hands out carries ?v=<build>; the
+// query is invisible to the CDN but perfectly visible to this script. If that
+// id is not the one baked into this copy, this copy is stale — go fetch the
+// real questions by their unique path.
+function boot(){
+  const wanted = (function(){
+    try { return new URLSearchParams(location.search).get('v'); } catch(e){ return null; }
+  })();
+
+  function go(){
+    STORE_KEY = STORE_BASE + "_" + ACTIVE_BUILD;
+    picks = new Array(QUIZ.length).fill(null);
+    draw();
+  }
+
+  if (!wanted || wanted === BUILD_ID) { go(); return; }
+
+  let settled = false;
+  function finish(){
+    if (settled) return;
+    settled = true;
+    const d = window.QUIZ_DATA;
+    if (d && Array.isArray(d.quiz) && d.quiz.length) {
+      QUIZ = d.quiz;
+      ACTIVE_BUILD = d.build || wanted;
+    }
+    go();
+  }
+
+  const sc = document.createElement('script');
+  sc.src = 'q-' + encodeURIComponent(wanted) + '.js';
+  sc.onload = finish;
+  sc.onerror = finish;          // fall back to the embedded questions
+  setTimeout(finish, 8000);     // and never leave a student on a blank page
+  document.head.appendChild(sc);
+}
+boot();
 </script>
 </body>
 </html>
